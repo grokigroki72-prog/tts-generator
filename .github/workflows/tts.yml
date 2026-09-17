@@ -4,6 +4,10 @@ on:
   repository_dispatch:
     types: [generar_audio]
 
+concurrency:
+  group: tts-generation
+  cancel-in-progress: false
+
 jobs:
   tts:
     runs-on: ubuntu-latest
@@ -29,6 +33,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           git add output/
           git commit -m "Audio escena ${{ github.event.client_payload.indice }}" || echo "Nada para commitear"
           git push

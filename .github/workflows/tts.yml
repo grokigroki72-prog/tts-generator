@@ -27,7 +27,7 @@ jobs:
           INDICE: ${{ github.event.client_payload.indice }}
         run: |
           mkdir -p output
-          edge-tts --voice "es-AR-ElenaNeural" --text "$TEXTO" --write-media "output/escena_${INDICE}.mp3"
+          edge-tts --voice "es-AR-TomasNeural" --pitch=-15Hz --rate=-5% --text "$TEXTO" --write-media "output/escena_${INDICE}.mp3"
 
       - name: Subir el audio al repo
         run: |

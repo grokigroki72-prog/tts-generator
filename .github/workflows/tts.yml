@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add output/
           git commit -m "Audio escena ${{ github.event.client_payload.indice }}" || echo "Nada para commitear"
+          git pull --rebase origin main
           git push

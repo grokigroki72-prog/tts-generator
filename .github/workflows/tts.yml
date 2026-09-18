@@ -25,15 +25,16 @@ jobs:
         env:
           TEXTO: ${{ github.event.client_payload.texto }}
           INDICE: ${{ github.event.client_payload.indice }}
+          RUN_ID: ${{ github.event.client_payload.run_id }}
         run: |
-          mkdir -p output
-          edge-tts --voice "es-AR-TomasNeural" --pitch=-15Hz --rate=-5% --text "$TEXTO" --write-media "output/escena_${INDICE}.mp3"
+          mkdir -p "output/${RUN_ID}"
+          edge-tts --voice "es-AR-TomasNeural" --pitch=-15Hz --rate=-5% --text "$TEXTO" --write-media "output/${RUN_ID}/escena_${INDICE}.mp3"
 
       - name: Subir el audio al repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add output/
-          git commit -m "Audio escena ${{ github.event.client_payload.indice }}" || echo "Nada para commitear"
+          git commit -m "Audio escena ${{ github.event.client_payload.indice }} - run ${{ github.event.client_payload.run_id }}" || echo "Nada para commitear"
           git pull --rebase origin main
           git push
